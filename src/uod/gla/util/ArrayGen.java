@@ -21,7 +21,7 @@ public class ArrayGen {
 
     public static int[] getIntArray(int length, int lowerBound, int higherBound) {
         if (length < 0) {
-            throw new IllegalArgumentException("Array length cannot be negative");
+            throw new IllegalArgumentException("Array length cannot be negative!");
         }
         // Reorder the bounds if needed
         if (lowerBound > higherBound) {
@@ -30,7 +30,7 @@ public class ArrayGen {
             higherBound = temp;
         }
         if (((long) higherBound - (long) lowerBound) >= Integer.MAX_VALUE) {
-            throw new IllegalArgumentException("Number range is too wide");
+            throw new IllegalArgumentException("Maximum number range exceeded!");
         }
         int[] array = new int[length];
         int diff = higherBound - lowerBound;
@@ -46,7 +46,7 @@ public class ArrayGen {
 
     public static int[] getIntArray(int length) {
         if (length < 0) {
-            throw new IllegalArgumentException("Array length cannot be negative");
+            throw new IllegalArgumentException("Array length cannot be negative!");
         }
         int[] array = new int[length];
         for (int i = 0; i < length; i++) {
@@ -57,7 +57,7 @@ public class ArrayGen {
 
     public static long[] getLongArray(int length) {
         if (length < 0) {
-            throw new IllegalArgumentException("Array length cannot be negative");
+            throw new IllegalArgumentException("Array length cannot be negative!");
         }
         long[] array = new long[length];
         for (int i = 0; i < length; i++) {
@@ -68,7 +68,7 @@ public class ArrayGen {
 
     public static double[] getDoubleArray(int length) {
         if (length < 0) {
-            throw new IllegalArgumentException("Array length cannot be negative");
+            throw new IllegalArgumentException("Array length cannot be negative!");
         }
         double[] array = new double[length];
         for (int i = 0; i < length; i++) {
