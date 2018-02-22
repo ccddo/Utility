@@ -7,14 +7,14 @@ import java.util.List;
  *
  * @author
  */
-public class RunTimer {
+public class CodeTimer {
 
     private boolean started;
     private long begin;
     private String tag;
     
     private final List<Integer> results = new ArrayList<>();
-    private int runs;
+    private int runCount;
 
     public void start(String tag) {
         this.tag = tag;
@@ -23,33 +23,33 @@ public class RunTimer {
     }
 
     public int stop(boolean print) {
-        int runtime = (int) (System.currentTimeMillis() - begin);
+        int time = (int) (System.currentTimeMillis() - begin);
         if (!started) {
             throw new IllegalStateException("You must call start before stop!");
         }
         if (print) {
             System.out.println("Time taken"
                     + (tag == null ? "" : (" (" + tag + ")"))
-                    + ": " + runtime + " milliseconds.");
+                    + ": " + time + " milliseconds.");
         }
         started = false;
-        return runtime;
+        return time;
     }
 
-    public void time(Runnable runnable, int runs) {
+    public void calculateRunTime(Runnable runnable, int runCount) {
         results.clear();
-        if (runs < 1) {
-            runs = 1;
+        if (runCount < 1) {
+            runCount = 1;
         }
-        this.runs = runs;
-        long time;
-        for (int i = 0; i < runs; i++) {
+        this.runCount = runCount;
+        long begin;
+        for (int i = 0; i < runCount; i++) {
             if (runnable instanceof Preparable) {
                 ((Preparable) runnable).prepare();
             }
-            time = System.currentTimeMillis();
+            begin = System.currentTimeMillis();
             runnable.run();
-            results.add((int) (System.currentTimeMillis() - time));
+            results.add((int) (System.currentTimeMillis() - begin));
         }
     }
 
@@ -66,7 +66,7 @@ public class RunTimer {
     }
 
     public void printStats() {
-        System.out.println("Number of executions: " + runs);
+        System.out.println("Number of executions: " + runCount);
         System.out.println("Max execution time: " + getMaxTime() + " milliseconds.");
         System.out.println("Min execution time: " + getMinTime() + " milliseconds.");
         System.out.println("Avg execution time: " + getAvgTime() + " milliseconds.");
