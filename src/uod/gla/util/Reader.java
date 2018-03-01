@@ -9,7 +9,7 @@ import java.util.Scanner;
  * entered by the user.
  * 
  * @author Chi Onyekaba [c.onyekaba@dundee.ac.uk]
- * @version 1.5
+ * @version 1.6
  * @since January 2, 2018
  */
 public class Reader {
@@ -475,6 +475,38 @@ public class Reader {
             loop = readBoolean("Is that correct? (Y/N)");
         }
         return selection;
+    }
+
+    /**
+     * This method is used to read a pattern-matching string from the keyboard.
+     * The string must match the given regular expression pattern otherwise, it
+     * will be rejected by the method.
+     *
+     * @param prompt The message to display to the user. In order words, it is
+     * the information the program is requesting the user to enter.
+     * @param pattern The regular expression pattern which the keyed-in string
+     * must match.
+     * @return The pattern-matching string entered by the user.
+     * @throws IllegalArgumentException if the user does not enter a
+     * pattern-matching string within the specified number of attempts or if an
+     * invalid regular expression pattern is entered. The specific exception
+     * thrown if an invalid pattern is entered is PatternSyntaxException (i.e.
+     * {@code java.util.regex.PatternSyntaxException}), which is a subclass of
+     * {@code java.lang.IllegalArgumentException}).
+     */
+    public static String readPatternString(String prompt, String pattern)
+            throws IllegalArgumentException {
+        int temp = attempts;
+        while (temp-- > 0) {
+            String str = readLine(prompt);
+            if (str.matches(pattern)) {
+                return str;
+            } else {
+                System.out.println("Invalid string format."
+                        + (temp > 0 ? " Please try again!" : ""));
+            }
+        }
+        throw new IllegalArgumentException("Invalid string format!");
     }
 
 }
