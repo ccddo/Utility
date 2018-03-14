@@ -64,6 +64,70 @@ public class Reader {
     }
 
     /**
+     * This method is used to read a line of text from the keyboard. The line of
+     * text entered must be of a length specified by the {@code length}
+     * parameter.
+     *
+     * @param prompt The message to display to the user. In order words, it is
+     * the information the program is requesting the user to enter.
+     * @param length The length of the line of text.
+     * @return The line of text entered by the user.
+     * @throws IllegalArgumentException if the user does not enter a line of
+     * text of the specified length, within the specified number of attempts.
+     */
+    public static String readLine(String prompt, int length)
+            throws IllegalArgumentException {
+        int temp = attempts;
+        while (temp-- > 0) {
+            String text = readLine(prompt);
+            if (text.length() == length) {
+                return text;
+            } else {
+                System.out.println("Invalid text length!"
+                        + (temp > 0 ? (" Text must have "
+                                + length + " character(s)!") : ""));
+            }
+        }
+        throw new IllegalArgumentException("Invalid text length!");
+    }
+
+    /**
+     * This method is used to read a line of text from the keyboard. The line of
+     * text must have a length within the range specified by the parameters
+     * {@code between} and {@code and}.
+     *
+     * @param prompt The message to display to the user. In order words, it is
+     * the information the program is requesting the user to enter.
+     * @param between The minimum length of the line of text.
+     * @param and The maximum length of the line of text.
+     * @return The line of text entered by the user.
+     * @throws IllegalArgumentException if the user does not enter a line of
+     * text within the specified length range and within the specified number of
+     * attempts.
+     */
+    public static String readLine(String prompt, int between, int and)
+            throws IllegalArgumentException {
+        int temp;
+        if (between > and) {
+            temp = between;
+            between = and;
+            and = temp;
+        }
+        temp = attempts;
+        while (temp-- > 0) {
+            String text = readLine(prompt);
+            if (text.length() >= between && text.length() <= and) {
+                return text;
+            } else {
+                System.out.println("Invalid text length!"
+                        + (temp > 0 ? (" Text length must be between "
+                                + between + " and " + and + ".") : ""));
+            }
+        }
+        throw new IllegalArgumentException("Invalid text length!");
+    }
+
+    /**
      * This method is used to read an integer value from the keyboard.
      *
      * @param prompt The message to display to the user. In order words, it is
@@ -87,10 +151,8 @@ public class Reader {
      *
      * @param prompt The message to display to the user. In order words, it is
      * the information the program is requesting the user to enter.
-     * @param between The lower limit (although not necessarily) of the integer
-     * requested.
-     * @param and The upper limit (although not necessarily) of the integer
-     * requested.
+     * @param between The lower limit of the integer requested.
+     * @param and The upper limit of the integer requested.
      * @return The integer value entered by the user.
      * @throws IllegalArgumentException if the user does not enter a valid
      * integer within the specified number of attempts.
@@ -147,10 +209,8 @@ public class Reader {
      *
      * @param prompt The message to display to the user. In order words, it is
      * the information the program is requesting the user to enter.
-     * @param between The lower limit (although not necessarily) of the double
-     * value requested.
-     * @param and The upper limit (although not necessarily) of the double value
-     * requested.
+     * @param between The lower limit of the double value requested.
+     * @param and The upper limit of the double value requested.
      * @return The double value entered by the user.
      * @throws IllegalArgumentException if the user does not enter a valid
      * double value within the specified number of attempts.
