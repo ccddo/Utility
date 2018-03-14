@@ -188,7 +188,9 @@ public class MenuBuilder {
                 System.out.println("\n" + prompt + "\n");
             }
             for (MenuItem item : items) {
-                System.out.println(item.code + ":\t" + item.description);
+                if (item != null) {
+                    System.out.println(item.code + ":\t" + item.description);
+                }
             }
             System.out.println("\nR:\tReturn");
             System.out.println("X:\tExit");
@@ -234,7 +236,7 @@ public class MenuBuilder {
     // Used to search for the menu item containing the method to launch.
     private static MenuItem search(String option, MenuItem[] items) {
         for (MenuItem item : items) {
-            if (option.equals(item.code)) {
+            if (item != null && option.equals(item.code)) {
                 return item;
             }
         }
