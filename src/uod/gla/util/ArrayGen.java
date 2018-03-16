@@ -1,7 +1,10 @@
 package uod.gla.util;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.function.DoubleUnaryOperator;
 
 /**
  *
@@ -19,62 +22,84 @@ public class ArrayGen {
         rnd = new Random();
     }
 
-    public static int[] getIntArray(int length, int lowerBound, int higherBound) {
-        if (length < 0) {
+    public static int[] getIntArray(int arrayLength, int lowerBound,
+            int upperBound) throws IllegalArgumentException {
+        if (arrayLength < 0) {
             throw new IllegalArgumentException("Array length cannot be negative!");
+        } else if (arrayLength == 0) {
+            return new int[0];
         }
-        // Reorder the bounds if needed
-        if (lowerBound > higherBound) {
-            int temp = lowerBound;
-            lowerBound = higherBound;
-            higherBound = temp;
-        }
-        if (((long) higherBound - (long) lowerBound) >= Integer.MAX_VALUE) {
-            throw new IllegalArgumentException("Maximum number range exceeded!");
-        }
-        int[] array = new int[length];
-        int diff = higherBound - lowerBound;
-        if (diff == 0) {
+        if (upperBound == lowerBound) {
+            int[] array = new int[arrayLength];
             Arrays.fill(array, lowerBound);
             return array;
+        } else if (lowerBound > upperBound) { // Reorder bounds if needed
+            int temp = lowerBound;
+            lowerBound = upperBound;
+            upperBound = temp;
         }
-        for (int i = 0; i < length; i++) {
-            array[i] = rnd.nextInt(diff + 1) + lowerBound;
+        if (upperBound != Integer.MAX_VALUE) {
+            upperBound++;
         }
-        return array;
+        return rnd.ints(arrayLength, lowerBound, upperBound).toArray();
     }
 
-    public static int[] getIntArray(int length) {
-        if (length < 0) {
+    public static int[] getIntArray(int arrayLength)
+            throws IllegalArgumentException {
+        if (arrayLength < 0) {
             throw new IllegalArgumentException("Array length cannot be negative!");
+        } else if (arrayLength == 0) {
+            return new int[0];
         }
-        int[] array = new int[length];
-        for (int i = 0; i < length; i++) {
-            array[i] = rnd.nextInt();
-        }
-        return array;
+        return rnd.ints(arrayLength).toArray();
     }
 
-    public static long[] getLongArray(int length) {
-        if (length < 0) {
+    public static double[] getDoubleArray(int arrayLength, double lowerBound,
+            double upperBound) throws IllegalArgumentException {
+        if (arrayLength < 0) {
             throw new IllegalArgumentException("Array length cannot be negative!");
+        } else if (arrayLength == 0) {
+            return new double[0];
         }
-        long[] array = new long[length];
-        for (int i = 0; i < length; i++) {
-            array[i] = rnd.nextLong();
+        if (upperBound == lowerBound) {
+            double[] array = new double[arrayLength];
+            Arrays.fill(array, lowerBound);
+            return array;
+        } else if (lowerBound > upperBound) { // Reorder bounds if needed
+            double temp = lowerBound;
+            lowerBound = upperBound;
+            upperBound = temp;
         }
-        return array;
+        return rnd.doubles(arrayLength, lowerBound, upperBound).toArray();
     }
 
-    public static double[] getDoubleArray(int length) {
-        if (length < 0) {
+    public static double[] getDoubleArray(int arrayLength, double lowerBound,
+            double upperBound, int scale, RoundingMode rm)
+            throws IllegalArgumentException {
+        if (arrayLength < 0) {
             throw new IllegalArgumentException("Array length cannot be negative!");
+        } else if (arrayLength == 0) {
+            return new double[0];
         }
-        double[] array = new double[length];
-        for (int i = 0; i < length; i++) {
-            array[i] = rnd.nextDouble();
+        if (upperBound == lowerBound) {
+            double[] array = new double[arrayLength];
+            Arrays.fill(array, lowerBound);
+            return array;
+        } else if (lowerBound > upperBound) { // Reorder bounds if needed
+            double temp = lowerBound;
+            lowerBound = upperBound;
+            upperBound = temp;
         }
-        return array;
+        scale = Integer.max(Integer.max(BigDecimal.valueOf(lowerBound).scale(),
+                BigDecimal.valueOf(upperBound).scale()), scale);
+        int finalScale = scale > 6 ? 6 : scale;
+        RoundingMode finalRM = rm == RoundingMode.UNNECESSARY
+                ? RoundingMode.HALF_EVEN : rm;
+        DoubleUnaryOperator op = (double operand) -> {
+            return BigDecimal.valueOf(operand)
+                    .setScale(finalScale, finalRM).doubleValue();
+        };
+        return rnd.doubles(arrayLength, lowerBound, upperBound).map(op).toArray();
     }
 
 }
