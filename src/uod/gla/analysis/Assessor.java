@@ -79,6 +79,8 @@ public class Assessor {
             long start = System.currentTimeMillis();
             runnable.run();
             int result = (int) (System.currentTimeMillis() - start);
+            // Code is initially executed once (to warm up the JVM)
+            // before execution time for subsequent executions is stored.
             if (i > 0) {
                 results[i - 1] = result;
             }

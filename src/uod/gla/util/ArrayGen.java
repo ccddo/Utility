@@ -96,7 +96,9 @@ public class ArrayGen {
      *
      * @param arrayLength The number of elements in the array
      * @param lowerBound The value of the smallest element in the array
+     * (inclusive)
      * @param upperBound The value of the largest element in the array
+     * (exclusive)
      * @return A double array of random values.
      * @throws IllegalArgumentException If {@code arrayLength} value is negative
      */
@@ -131,9 +133,10 @@ public class ArrayGen {
      * @param lowerBound The value of the smallest element in the array
      * @param upperBound The value of the largest element in the array
      * @param scale The maximum number of digits to the right of the decimal
-     * point. The specified scale is checked to ensure that it the greatest of
-     * the values inferred from the {@code lowerBound}, {@code upperBound} and
-     * the {@code scale} argument itself, but no more than 6 in any case.
+     * point. The specified scale is checked to ensure that the greatest of the
+     * scale values inferred from the {@code lowerBound}, {@code upperBound} and
+     * the {@code scale} argument itself is used, however, in any case, it will
+     * not have a value greater than 6.
      * @param roundingMode The rounding mode to apply to any digits to the right
      * of the decimal, beyond the specified scale. All rounding modes are
      * permitted except {@code RoundingMode.UNNECESSARY} in which case, it
