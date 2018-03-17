@@ -59,7 +59,7 @@ public class Assessor {
      * i.e. the run count). In cases where some code preparation is required
      * before execution (such as creating a random array), a {@code Preparable}
      * object can be used to do code preparations before run.
-     * {@code uod.gla.analysis.Preparable} is a sub-interfaces of
+     * {@code uod.gla.analysis.Preparable} is a sub-interface of
      * {@code java.lang.Runnable}
      *
      * @param runnable An object of a class that implements Runnable
