@@ -62,6 +62,7 @@ public class Reader {
         if (prompt == null || prompt.isEmpty()) {
             prompt = "Input requested";
         }
+        prompt = prompt.trim();
         char last = prompt.charAt(prompt.length() - 1);
         if (Character.isLetterOrDigit(last)) {
             prompt = prompt + ": ";
