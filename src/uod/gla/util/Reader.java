@@ -305,7 +305,7 @@ public class Reader {
      * @throws IllegalArgumentException if the user does not enter a valid email
      * within the specified number of attempts.
      */
-    public static String readEmailString(String prompt)
+    public static String readEmail(String prompt)
             throws IllegalArgumentException {
         int temp = attempts;
         while (temp-- > 0) {
@@ -334,7 +334,7 @@ public class Reader {
      * @throws IllegalArgumentException if the user does not enter a valid name
      * string within the specified number of attempts.
      */
-    public static String readNameString(String prompt)
+    public static String readName(String prompt)
             throws IllegalArgumentException {
         int temp = attempts;
         while (temp-- > 0) {
@@ -367,7 +367,7 @@ public class Reader {
      * @throws IllegalArgumentException if the user does not enter a valid
      * number string within the specified number of attempts.
      */
-    public static String readNumberString(String prompt)
+    public static String readNumber(String prompt)
             throws IllegalArgumentException {
         int temp = attempts;
         while (temp-- > 0) {
@@ -395,7 +395,7 @@ public class Reader {
      * number string of the specified length, within the specified number of
      * attempts or if a length of value less than 1 is specified.
      */
-    public static String readNumberString(String prompt, int length)
+    public static String readNumber(String prompt, int length)
             throws IllegalArgumentException {
         if (length < 1) {
             throw new IllegalArgumentException("Length must be greater than zero");
@@ -433,7 +433,7 @@ public class Reader {
      * specified number of attempts or if any of the length boundaries (i.e.
      * {@code between} or {@code and}) is less than 1.
      */
-    public static String readNumberString(String prompt, int between, int and)
+    public static String readNumber(String prompt, int between, int and)
             throws IllegalArgumentException {
         if (between > and) {
             int tmp = between;
@@ -563,7 +563,7 @@ public class Reader {
      * {@code java.util.regex.PatternSyntaxException}), which is a subclass of
      * {@code java.lang.IllegalArgumentException}).
      */
-    public static String readPatternString(String prompt, String pattern)
+    public static String readMatch(String prompt, String pattern)
             throws IllegalArgumentException {
         int temp = attempts;
         while (temp-- > 0) {
