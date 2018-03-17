@@ -59,10 +59,12 @@ public class Reader {
      * @return The line of text entered by the user.
      */
     public static String readLine(String prompt) {
+        if (prompt != null) {
+            prompt = prompt.trim();
+        }
         if (prompt == null || prompt.isEmpty()) {
             prompt = "Input requested";
         }
-        prompt = prompt.trim();
         char last = prompt.charAt(prompt.length() - 1);
         if (Character.isLetterOrDigit(last)) {
             prompt = prompt + ": ";
