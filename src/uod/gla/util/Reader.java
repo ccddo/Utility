@@ -530,9 +530,9 @@ public class Reader {
      */
     public static <T> T readObject(String prompt, T... objects)
             throws IllegalArgumentException {
-        boolean loop = false;
+        boolean ceaseLoop = false;
         T selection = null;
-        while (!loop) {
+        while (!ceaseLoop) {
             if (objects.length < 1) {
                 throw new IllegalArgumentException("No objects supplied");
             }
@@ -544,7 +544,7 @@ public class Reader {
             int objectIndex = readInt("Enter the option number", 1, objects.length);
             selection = objects[objectIndex - 1];
             System.out.println("You have selected \"" + selection + "\"");
-            loop = readBoolean("Is that correct? (Y/N)");
+            ceaseLoop = readBoolean("Is that correct? (Y/N)");
         }
         return selection;
     }
