@@ -138,7 +138,7 @@ public class MenuBuilder {
      * @return Returns the object which was returned by the invoked method or
      * null if the the invoked object has a return type of void.
      * @throws ClassCastException if the method invoked by this menu returns a
-     * type that cannot be casted to the type specified by this method's type
+     * type that cannot be cast to the type specified by this method's type
      * argument, T. Please note that if this method is called from one of the
      * other {@code MenuBuilder} methods, any thrown exception may be caught by
      * that method and the programmer may not be able to get hold of the
@@ -167,7 +167,7 @@ public class MenuBuilder {
      * @return Returns the object which was returned by the invoked method or
      * null if the the invoked object has a return type of void.
      * @throws ClassCastException if the method invoked by this menu returns a
-     * type that cannot be casted to the type specified by this method's type
+     * type that cannot be cast to the type specified by this method's type
      * argument, T. Please note that if this method is called from one of the
      * other {@code MenuBuilder} methods, any thrown exception may be caught by
      * that method and the programmer may not be able to get hold of the
