@@ -122,7 +122,7 @@ public final class RunTime implements Comparable<RunTime> {
         } else if (getMinTime() != other.getMinTime()) {
             return getMinTime() - other.getMinTime();
         } else {
-            return other.getMaxTime() - getMaxTime();
+            return getMaxTime() - other.getMaxTime();
         }
     }
 
