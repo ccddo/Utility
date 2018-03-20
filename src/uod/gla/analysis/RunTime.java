@@ -110,6 +110,9 @@ public final class RunTime implements Comparable<RunTime> {
      * run time values are less than objects with higher maximum run time
      * values. Please note that because RunTime objects encapsulate the time
      * taken for a code to run to completion, lower values are deemed better.
+     * Therefore this implementation should mean that if a list (or an array) of
+     * RunTime objects are sorted in ascending order, the better values should
+     * appear on top.
      *
      * @param other Another RunTime object to be compared to this one.
      * @return a negative integer, zero, or a positive integer as this object is
