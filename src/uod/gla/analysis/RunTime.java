@@ -5,7 +5,8 @@ import java.util.IntSummaryStatistics;
 import java.util.Objects;
 
 /**
- * This class encapsulates the results of a code run time analysis.
+ * This class encapsulates the results of a code run time analysis. Please note
+ * that time units are in milliseconds.
  *
  * @author Chi Onyekaba [c.onyekaba@dundee.ac.uk]
  * @version 1.1
@@ -60,27 +61,27 @@ public final class RunTime implements Comparable<RunTime> {
     }
 
     /**
-     * Returns the maximum time taken for the code to run.
+     * Returns the maximum time taken for the code to run (in milliseconds).
      *
-     * @return the maximum time taken for the code to run.
+     * @return the maximum time taken for the code to run (in milliseconds).
      */
     public int getMaxTime() {
         return stats.getMax();
     }
 
     /**
-     * Returns the minimum time taken for the code to run.
+     * Returns the minimum time taken for the code to run (in milliseconds).
      *
-     * @return the minimum time taken for the code to run.
+     * @return the minimum time taken for the code to run (in milliseconds).
      */
     public int getMinTime() {
         return stats.getMin();
     }
 
     /**
-     * Returns the average time taken for the code to run.
+     * Returns the average time taken for the code to run (in milliseconds).
      *
-     * @return the average time taken for the code to run.
+     * @return the average time taken for the code to run (in milliseconds).
      */
     public double getAvgTime() {
         return stats.getAverage();
@@ -99,8 +100,16 @@ public final class RunTime implements Comparable<RunTime> {
     }
 
     /**
-     * Compares this RunTime object to another RunTime object. This would be
-     * useful if there's a need to sort a list RunTime objects.
+     * Compares this RunTime object to another RunTime object. Comparison is
+     * first based on the average run time (RunTime objects with lower average
+     * run time values are less than RunTime objects with higher average run
+     * time values. If the average run time values are equal, the minimum run
+     * time is checked. Objects with lower minimum run time values are less than
+     * those with higher minimum run time values. If the minimum run time values
+     * are equal, the maximum run time is checked and objects with lower maximum
+     * run time values are less than objects with higher maximum run time
+     * values. Please note that because RunTime objects encapsulate the time
+     * taken for a code to run to completion, lower values are deemed better.
      *
      * @param other Another RunTime object to be compared to this one.
      * @return a negative integer, zero, or a positive integer as this object is
