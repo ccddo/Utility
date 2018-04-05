@@ -490,14 +490,14 @@ public class Reader {
         if (en == null || !en.isEnum()) {
             throw new IllegalArgumentException("Enum class required!");
         }
+        T[] enums = en.getEnumConstants();
+        if (enums.length < 1) {
+            throw new IllegalArgumentException("The enum, "
+                    + en.getSimpleName() + ", contains no values");
+        }
         boolean loop = false;
         T selection = null;
         while (!loop) {
-            T[] enums = en.getEnumConstants();
-            if (enums.length < 1) {
-                throw new IllegalArgumentException("The enum, "
-                        + en.getSimpleName() + ", contains no values");
-            }
             System.out.println(prompt == null ? "Please select an option" : prompt);
             int count = 0;
             for (T constant : enums) {
