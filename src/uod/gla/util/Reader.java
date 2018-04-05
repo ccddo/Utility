@@ -530,12 +530,12 @@ public class Reader {
      */
     public static <T> T readObject(String prompt, T... objects)
             throws IllegalArgumentException {
+        if (objects.length < 1) {
+            throw new IllegalArgumentException("No objects supplied");
+        }
         boolean ceaseLoop = false;
         T selection = null;
         while (!ceaseLoop) {
-            if (objects.length < 1) {
-                throw new IllegalArgumentException("No objects supplied");
-            }
             System.out.println(prompt == null ? "Please select an object" : prompt);
             int count = 0;
             for (T object : objects) {
