@@ -540,7 +540,8 @@ public class Reader {
             System.out.println();
             int count = 0;
             for (T object : objects) {
-                System.out.println(++count + ":\t" + object.toString().replace("\n", "\n\t") + "\n");
+                System.out.println(++count + ":\t" 
+                        + object.toString().replace("\n", "\n\t") + "\n");
             }
             int objectIndex = readInt("Enter the option number", 1, objects.length);
             selection = objects[objectIndex - 1];
