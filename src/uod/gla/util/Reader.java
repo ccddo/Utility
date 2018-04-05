@@ -537,13 +537,14 @@ public class Reader {
         T selection = null;
         while (!ceaseLoop) {
             System.out.println(prompt == null ? "Please select an object" : prompt);
+            System.out.println();
             int count = 0;
             for (T object : objects) {
-                System.out.println(++count + "\n" + object + "\n");
+                System.out.println(++count + ":\t" + object.toString().replace("\n", "\n\t") + "\n");
             }
             int objectIndex = readInt("Enter the option number", 1, objects.length);
             selection = objects[objectIndex - 1];
-            System.out.println("You have selected \"" + selection + "\"");
+            System.out.println("You have selected...\n" + selection);
             ceaseLoop = readBoolean("Is that correct? (Y/N)");
         }
         return selection;
