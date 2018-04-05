@@ -532,6 +532,8 @@ public class Reader {
             throws IllegalArgumentException {
         if (objects.length < 1) {
             throw new IllegalArgumentException("No objects supplied");
+        } else if (objects.length == 1) {
+            return objects[0];
         }
         boolean ceaseLoop = false;
         T selection = null;
