@@ -1,13 +1,13 @@
 package uod.gla.util;
 
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * This class is used for reading data from the keyboard. Although it is powered
  * under the hood by java.util.Scanner, it augments it with exception handling,
  * data validation and the ability to re-prompt for input when invalid data is
- * entered by the user.
- * 
+ * entered by the user. There are also methods provided for object selection.
+ *
  * @author Chi Onyekaba [c.onyekaba@dundee.ac.uk]
  * @version 1.6
  * @since January 2, 2018
@@ -20,7 +20,6 @@ public class Reader {
 
     // This class uses a Scanner for its internal operations.
     private static final Scanner INPUT = new Scanner(System.in);
-
 
     /**
      * This is used to set the number of times a user can try to enter the
@@ -530,23 +529,45 @@ public class Reader {
      */
     public static <T> T readObject(String prompt, T... objects)
             throws IllegalArgumentException {
-        if (objects.length < 1) {
-            throw new IllegalArgumentException("No objects supplied");
-        } else if (objects.length == 1) {
-            return objects[0];
+        return readObject(prompt, Arrays.asList(objects));
+    }
+
+    /**
+     * This method enables the user to choose an object from the supplied
+     * collection of objects. It is very useful in instances where searching for
+     * an object returns more than one matching object and the user has to
+     * visually make a choice from the returned objects.
+     *
+     * @param <T> The object type
+     * @param prompt The message to display to the user. In order words, it is
+     * the information the program is requesting the user to supply.
+     * @param objects A collection of objects from which the user is to choose.
+     * @return The selected object
+     * @throws IllegalArgumentException if a null or empty collection was
+     * supplied or if the user does not select a correct value within the
+     * specified number of attempts or if the user does not correctly confirm
+     * the selected object within the specified number of attempts.
+     */
+    public static <T> T readObject(String prompt, Collection<T> objects)
+            throws IllegalArgumentException {
+        if (objects == null || objects.isEmpty()) {
+            throw new IllegalArgumentException("Collection is null or empty!");
+        } else if (objects.size() == 1) {
+            return new ArrayList<>(objects).get(0);
         }
         boolean ceaseLoop = false;
         T selection = null;
+        List<T> list = new ArrayList<>(objects);
         while (!ceaseLoop) {
             System.out.println(prompt == null ? "Please select an object" : prompt);
             System.out.println();
             int count = 0;
-            for (T object : objects) {
-                System.out.println(++count + ":\t" 
+            for (T object : list) {
+                System.out.println(++count + ":\t"
                         + object.toString().replace("\n", "\n\t") + "\n");
             }
-            int objectIndex = readInt("Enter the option number", 1, objects.length);
-            selection = objects[objectIndex - 1];
+            int objectIndex = readInt("Enter the option number", 1, list.size());
+            selection = list.get(objectIndex - 1);
             System.out.println("You have selected...\n" + selection);
             ceaseLoop = readBoolean("Is that correct? (Y/N)");
         }
