@@ -1,10 +1,13 @@
 package uod.gla.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * This class provides utility methods for strings.
  *
  * @author Chi Onyekaba [c.onyekaba@dundee.ac.uk]
- * @version 1.1
+ * @version 1.2
  * @since April 4, 2018
  */
 public class StringUtils {
@@ -55,6 +58,72 @@ public class StringUtils {
             sentence = sb.toString();
         }
         return sentence.trim();
+    }
+
+    /**
+     * This method is used to print text to the console (that is, System.out)
+     * with provisions for word wrapping. The argument, width, is used to set
+     * the maximum width for printing. Before printing begins, the value of the
+     * width is checked to ensure that there is no word with a length, larger
+     * than the width. If there is, the value of the width is modified to the
+     * length of the longest word.
+     *
+     * @param sentence The string to print to console.
+     * @param width The maximum allowed width of the word.
+     */
+    public static void printWrap(String sentence, int width) {
+        if (sentence == null || sentence.isEmpty()) {
+            return;
+        }
+        String[] words = sentence.trim()
+                .replaceAll("\b", "") // Backspace not supported!
+                .replaceAll("\f", "") // formfeed not supported!
+                .replaceAll("\r", "") // Carriage return not supported!
+                .replaceAll("\t", "") // Tab not supported!
+                .split("[ ]+");
+        List<String> wordList = new ArrayList<>();
+        for (String word : words) { // Check for newline and split around it.
+            if (word.contains("\n")) {
+                String[] split = word.split("\n");
+                for (int i = 0; i < split.length; i++) {
+                    wordList.add(split[i]);
+                    if (i < split.length - 1) {
+                        wordList.add("\n");
+                    }
+                }
+            } else {
+                wordList.add(word);
+            }
+        }
+        for (String word : wordList) { // Adjust width if necessary
+            if (width < word.length()) {
+                width = word.length();
+            }
+        }
+        int printed = 0;
+        for (String word : wordList) {
+            if (word.equals("\n")) {
+                System.out.print(word);
+                printed = 0;
+                continue;
+            }
+            if (word.isEmpty()) {
+                continue;
+            }
+            if (word.length() <= (width - printed)) {
+                System.out.print(word);
+                printed += word.length();
+            } else {
+                System.out.println();
+                System.out.print(word);
+                printed = word.length();
+            }
+            if (printed < width) {
+                System.out.print(" ");
+                printed++;
+            }
+        }
+        System.out.println();
     }
 
 }
