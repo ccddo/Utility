@@ -66,7 +66,10 @@ public class StringUtils {
      * the maximum width for printing. Before printing begins, the value of the
      * width is checked to ensure that there is no word with a length, larger
      * than the width. If there is, the value of the width is modified to the
-     * length of the longest word.
+     * length of the longest word. Please note that this method modifies some
+     * escape sequences as follows: Backspace is removed, carriage return and
+     * formfeed are changed to newline, and tab is changed to a single
+     * whitespace character.
      *
      * @param sentence The string to print to console.
      * @param width The maximum allowed width of the word.
@@ -77,9 +80,9 @@ public class StringUtils {
         }
         String[] words = sentence.trim()
                 .replaceAll("\b", "") // Backspace not supported!
-                .replaceAll("\f", "") // formfeed not supported!
-                .replaceAll("\r", "") // Carriage return not supported!
-                .replaceAll("\t", "") // Tab not supported!
+                .replaceAll("\f", "\n") // Formfeed becomes newline!
+                .replaceAll("\r", "\n") // Carriage return becomes newline!
+                .replaceAll("\t", " ") // Tab becomes whitespace!
                 .split("[ ]+");
         List<String> wordList = new ArrayList<>();
         for (String word : words) { // Check for newline and split around it.
