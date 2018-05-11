@@ -216,13 +216,13 @@ public class MenuBuilder {
                 rtn = item.object.getClass()
                         .getDeclaredMethod(item.methodName).invoke(item.object);
             } catch (NoSuchMethodException ex) {
-                System.out.println("Method does not exist!");
+                System.err.println("Method does not exist!");
             } catch (IllegalAccessException ex) {
-                System.out.println("Method is inaccessible!");
+                System.err.println("Method is inaccessible!");
             } catch (IllegalArgumentException ex) {
-                System.out.println("Error: Check method arguments and/or class instance!");
+                System.err.println("Error: Check method arguments and/or class instance!");
             } catch (InvocationTargetException ex) {
-                System.out.println(ex.getCause().getClass().getSimpleName()
+                System.err.println(ex.getCause().getClass().getSimpleName()
                         + " exception thrown by invoked method!"
                         + "\nError Message: " + ex.getCause().getMessage());
             }
@@ -240,7 +240,7 @@ public class MenuBuilder {
                 return item;
             }
         }
-        System.out.println("\nNo such menu!");
+        System.err.println("\nNo such menu!");
         return null; // This null value is only used internally
     }
 

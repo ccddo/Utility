@@ -89,7 +89,7 @@ public class Storage {
             message = "An I/O error has occured!";
         }
         if (!suppressExceptionMsg) {
-            System.out.println(message);
+            System.err.println(message);
         }
         return false;
     }
@@ -148,7 +148,7 @@ public class Storage {
             message = "Object cannot be found!";
         }
         if (!suppressExceptionMsg) {
-            System.out.println(message);
+            System.err.println(message);
         }
         return null;
     }

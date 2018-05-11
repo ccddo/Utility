@@ -94,7 +94,7 @@ public class Reader {
             if (text.length() == length) {
                 return text;
             } else {
-                System.out.println("Invalid text length!"
+                System.err.println("Invalid text length!"
                         + (temp > 0 ? (" Text must have "
                                 + length + " character(s)!") : ""));
             }
@@ -130,7 +130,7 @@ public class Reader {
             if (text.length() >= between && text.length() <= and) {
                 return text;
             } else {
-                System.out.println("Invalid text length!"
+                System.err.println("Invalid text length!"
                         + (temp > 0 ? (" Text length must be between "
                                 + between + " and " + and + ".") : ""));
             }
@@ -187,10 +187,10 @@ public class Reader {
                     return parsedInt;
                 }
             } catch (NumberFormatException e) {
-                System.out.println("That's not an integer."
+                System.err.println("That's not an integer."
                         + (temp > 0 ? " Please try again!" : ""));
             } catch (IllegalArgumentException e) {
-                System.out.println("Integer out of range."
+                System.err.println("Integer out of range."
                         + (temp > 0 ? (" Please enter an integer between "
                                 + between + " and " + and + ".") : ""));
             }
@@ -244,10 +244,10 @@ public class Reader {
                     return parsedDouble;
                 }
             } catch (NumberFormatException e) {
-                System.out.println("That's not a number."
+                System.err.println("That's not a number."
                         + (temp > 0 ? " Please try again!" : ""));
             } catch (IllegalArgumentException e) {
-                System.out.println("Number out of range."
+                System.err.println("Number out of range."
                         + (temp > 0 ? (" Please enter a number between "
                                 + between + " and " + and + ".") : ""));
             }
@@ -290,7 +290,7 @@ public class Reader {
                         throw new IllegalArgumentException();
                 }
             } catch (IllegalArgumentException e) {
-                System.out.println("Not a valid boolean."
+                System.err.println("Not a valid boolean."
                         + (temp > 0 ? " Please try again!" : ""));
             }
         }
@@ -315,7 +315,7 @@ public class Reader {
             if (email.matches("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,6}$")) {
                 return email;
             } else {
-                System.out.println("Invalid email format."
+                System.err.println("Invalid email format."
                         + (temp > 0 ? " Please try again!" : ""));
             }
         }
@@ -351,7 +351,7 @@ public class Reader {
                     return name;
                 }
             } else {
-                System.out.println("Invalid name format."
+                System.err.println("Invalid name format."
                         + (temp > 0 ? " Please try again!" : ""));
             }
         }
@@ -377,7 +377,7 @@ public class Reader {
             if (number.matches("[0-9]+")) {
                 return number;
             } else {
-                System.out.println("Invalid number format."
+                System.err.println("Invalid number format."
                         + (temp > 0 ? " Please try again!" : ""));
             }
         }
@@ -406,10 +406,10 @@ public class Reader {
         while (temp-- > 0) {
             String number = readLine(prompt);
             if (!number.matches("[0-9]+")) {
-                System.out.println("Invalid number format."
+                System.err.println("Invalid number format."
                         + (temp > 0 ? " Please try again!" : ""));
             } else if (number.length() != length) {
-                System.out.println("Invalid number length."
+                System.err.println("Invalid number length."
                         + (temp > 0 ? (" Please enter a number with "
                                 + length + " digit(s)!") : ""));
             } else {
@@ -449,10 +449,10 @@ public class Reader {
         while (temp-- > 0) {
             String number = readLine(prompt);
             if (!number.matches("[0-9]+")) {
-                System.out.println("Invalid number format."
+                System.err.println("Invalid number format."
                         + (temp > 0 ? " Please try again!" : ""));
             } else if (number.length() < between || number.length() > and) {
-                System.out.println("Invalid number length."
+                System.err.println("Invalid number length."
                         + (temp > 0 ? (" Digits must be between "
                                 + between + " and " + and + ".") : ""));
             } else {
@@ -599,7 +599,7 @@ public class Reader {
             if (str.matches(pattern)) {
                 return str;
             } else {
-                System.out.println("Invalid string format."
+                System.err.println("Invalid string format."
                         + (temp > 0 ? " Please try again!" : ""));
             }
         }
