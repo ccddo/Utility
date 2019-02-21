@@ -75,10 +75,10 @@ public class Storage {
             boolean suppressExceptionMsg) {
         exception = null;
         String message;
-        new File(dir).mkdir(); // Creates the directory if it does not exist.
+        new java.io.File(dir).mkdir(); // Creates the directory if it does not exist.
         try (ObjectOutputStream out = new ObjectOutputStream(
                 new BufferedOutputStream(new FileOutputStream(
-                        new File(dir, fileName))))) {
+                        new java.io.File(dir, fileName))))) {
             out.writeObject(obj);
             return true;
         } catch (FileNotFoundException ex) {
@@ -132,7 +132,7 @@ public class Storage {
         String message;
         try (ObjectInputStream in = new ObjectInputStream(
                 new BufferedInputStream(new FileInputStream(
-                        new File(dir, fileName))))) {
+                        new java.io.File(dir, fileName))))) {
             return (T) in.readObject();
         } catch (FileNotFoundException ex) {
             exception = ex;
