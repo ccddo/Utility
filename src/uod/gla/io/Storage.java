@@ -15,7 +15,10 @@ import java.io.*;
  * @author Chi Onyekaba [c.onyekaba@dundee.ac.uk]
  * @version 1.2
  * @since January 9, 2018.
+ * @deprecated This class has now been replaced by class File. It will be
+ * removed in a future version. Please upgrade to the new class, File.
  */
+@Deprecated
 public class Storage {
 
     // The default directory (folder) name.
