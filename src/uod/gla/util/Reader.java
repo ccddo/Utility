@@ -536,7 +536,7 @@ public class Reader {
      * This method enables the user to choose an object from the supplied
      * collection of objects. It is very useful in instances where searching for
      * an object returns more than one matching object and the user has to
-     * visually make a choice from the returned objects.
+     * visually make a choice from the list of returned objects.
      *
      * @param <T> The object type
      * @param prompt The message to display to the user. In order words, it is
@@ -571,6 +571,46 @@ public class Reader {
             System.out.println("You have selected...\n" + selection);
             ceaseLoop = readBoolean("Is that correct? (Y/N)");
         }
+        return selection;
+    }
+
+    /**
+     * This method enables the user to choose one or more objects from a
+     * collection of objects. It is very useful in instances where searching for
+     * an object returns more than one matching object and the user has to
+     * visually choose one or more objects from the list of returned objects.
+     *
+     * @param <T> The object type
+     * @param prompt The message to display to the user. In order words, it is
+     * the information the program is requesting the user to supply.
+     * @param objects A collection of objects from which the user is to choose.
+     * @return A collection of the selected object(s)
+     * @throws IllegalArgumentException if a null or empty collection was
+     * supplied or if the user does not select a correct value within the
+     * specified number of attempts or if the user does not correctly confirm
+     * the selected object or correctly respond to prompts within the specified
+     * number of attempts.
+     */
+    public static <T> Collection<T> readObjects(String prompt, Collection<T> objects)
+            throws IllegalArgumentException {
+        if (objects == null || objects.isEmpty()) {
+            throw new IllegalArgumentException("Collection is null or empty!");
+        } else if (objects.size() == 1) {
+            return objects;
+        }
+        Set<T> items = new LinkedHashSet<>(objects);
+        Set<T> selection = new LinkedHashSet<>();
+        do {
+            T selected = readObject(prompt, items);
+            selection.add(selected);
+            items.remove(selected);
+            System.out.println("\nCurrently selected items: ");
+            for (T t : selection) {
+                System.out.println(t);
+            }
+            System.out.println();
+        } while (!items.isEmpty()
+                && readBoolean("Do you want to select another item"));
         return selection;
     }
 
