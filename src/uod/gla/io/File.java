@@ -45,7 +45,14 @@ public class File {
      * @param fileName The name of the file that contains (or will contain) the
      * object data.
      */
-    public File(String directory, String fileName) {
+    public File(String directory, String fileName) throws IllegalArgumentException {
+        if (directory == null || directory.isEmpty()
+                || fileName == null || fileName.isEmpty()) {
+            throw new IllegalArgumentException("Directory or file name cannot "
+                    + "be a null or empty string");
+            // Will need to add a check to ensure the string represents a valid name
+            // E.g. check for special characters, etc.
+        }
         this.directory = directory;
         this.fileName = fileName;
         java.io.File parent = new java.io.File("DataFiles");
