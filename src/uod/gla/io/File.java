@@ -4,12 +4,13 @@ import java.io.*;
 
 /**
  * This class provides storage capabilities for objects of classes which
- * implement java.io.Serializable. An object of this class represents a file,
- * which the programmer can use to save (or retrieve) an object to (or from)
- * disk. Please note that this class handles all exceptions thrown during I/O
- * operation. To check whether any exception was thrown after the last I/O
+ * implement java.io.Serializable. An object of this class represents an OS
+ * file, which the programmer can use to save (or retrieve) an object to (or
+ * from) disk. Please note that this class handles all exceptions thrown during
+ * I/O operation. To check whether any exception was thrown after the last I/O
  * operation and what type of exception it is, please see the
- * {@code getException()} method below.
+ * {@code getException()} method below. All files and directories are saved in a
+ * directory called DataFiles on the project's home directory.
  *
  * @author Chi Onyekaba [c.onyekaba@dundee.ac.uk]
  * @version 1.0
@@ -18,9 +19,9 @@ import java.io.*;
 public class File {
 
     /**
-     * The name of the directory where the file is stored. Please note that the
-     * directory will be created inside a directory called DataFiles, on the
-     * project's home directory.
+     * The name of the directory where the file is (or will be) stored. Please
+     * note that the directory will be created inside a directory called
+     * DataFiles, on the project's home directory.
      */
     public final String directory;
 
@@ -130,8 +131,7 @@ public class File {
      * @throws ClassCastException if the object cannot be cast to the type
      * specified by the type argument, T.
      */
-    public <T> T retrieve()
-            throws ClassCastException {
+    public <T> T retrieve() throws ClassCastException {
         return this.<T>retrieve(false);
     }
 
