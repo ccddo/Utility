@@ -6,13 +6,13 @@ import java.io.*;
  * This class provides storage capabilities for objects of classes which
  * implement java.io.Serializable. An object of this class represents an OS
  * file, which the programmer can use to save (or retrieve) an object to (or
- * from) disk. Please note that this class handles all exceptions thrown during
+ * from) disk. Please note that this class masks all exceptions thrown during
  * I/O operation. To check whether any exception was thrown after the last I/O
  * operation and what type of exception it is, please see the
  * {@code getException()} method below. All files and directories are saved in a
  * directory called DataFiles on the project's home directory.
  *
- * @author Chi Onyekaba [c.onyekaba@dundee.ac.uk]
+ * @author Chi Onyekaba
  * @version 1.0
  * @since February 21, 2019.
  */
@@ -78,10 +78,11 @@ public class File {
      * Serializable interface. This also includes the classes of objects that
      * are members of the object to be saved, their members, etc.
      *
+     * @param <T> The object type - must implement java.io.Serializable.
      * @param obj The object to be saved (must implement java.io.Serializable).
      * @return Returns true if the file was successfully saved, false otherwise.
      */
-    public boolean save(Serializable obj) {
+    public <T extends Serializable> boolean save(T obj) {
         return save(obj, false);
     }
 
@@ -101,13 +102,14 @@ public class File {
      * Serializable interface. This also includes the classes of objects that
      * are members of the object to be saved, their members, etc.
      *
+     * @param <T> The object type - must implement java.io.Serializable.
      * @param obj The object to be saved (must implement java.io.Serializable).
      * @param suppressExceptionMsg A flag to suppress screen printing of any
      * error messages generated when an object is being saved to disk. If set to
      * true, error messages are not printed to screen.
      * @return Returns true if the file was successfully saved, false otherwise.
      */
-    public boolean save(Serializable obj, boolean suppressExceptionMsg) {
+    public <T extends Serializable> boolean save(T obj, boolean suppressExceptionMsg) {
         exception = null;
         String message;
         try (ObjectOutputStream out = new ObjectOutputStream(
