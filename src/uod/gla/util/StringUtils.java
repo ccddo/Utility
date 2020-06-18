@@ -128,5 +128,48 @@ public class StringUtils {
         }
         System.out.println();
     }
+    
+    /**
+     * This method takes in a string and return a fixed-length string, either 
+     * appending the original string with spaces (if it is less than the required 
+     * length) or dropping any excess characters (and possibly appending an ellipsis).
+     * This method is useful in situations where a string needs to be fitted into 
+     * a fixed sized space or cell.
+     * @param str the string to convert to a fixed-length string
+     * @param length the required string length
+     * @return A fixed-length string
+     * @throws IllegalArgumentException if the specified length is less than zero.
+     */
+    public static String toFixedLength(String str, int length) 
+            throws IllegalArgumentException {
+        if (length < 0) {
+            throw new IllegalArgumentException("String length must be greater than zero!");
+        }
+        StringBuilder sb = new StringBuilder(length);
+        str = str == null ? "" : str;
+        // Ellipsis not used when string length is less than 4
+        if (length < 4) {
+            int j = 0;
+            for (int i = 0; i < str.length() && i < length; i++) {
+                sb.append(str.charAt(i));
+                j = i + 1;
+            }
+            for (; j < length; j++) {
+                sb.append(' ');
+            }
+            return sb.toString();
+        }
+        // Ellipsis used when string length is greater than 4
+        sb.append(str);
+        if (sb.length() > length) {
+            sb.delete(length - 3, sb.length());
+            sb.append("...");
+        } else if (sb.length() < length) {
+            for (int i = sb.length(); i < length; i++) {
+                sb.append(' ');
+            }
+        }
+        return sb.toString();
+    }
 
 }
