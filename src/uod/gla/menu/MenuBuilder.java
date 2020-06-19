@@ -4,26 +4,29 @@ import java.lang.reflect.*;
 import uod.gla.util.Reader;
 
 /**
- * The MenuBuilder class provides a convenient way to create command-line menu
- * entries and then launch an operation selected by the end user. The idea
- * behind this class is that a programmer can create no-parameter, no-return
- * methods which perform operations relating to a menu item. These no-parameter,
- * no-return methods can be used to create a MenuItem which this class can used
- * to build the command-line interface and also manage the interaction between a
- * user and the system. It is important to note that only public methods that
- * require no arguments and return no value (void) are supported. The only
- * exception to this is that the two methods that begin with
- * {@code displayMenuOnceAndReturn...} can return a value (see the descriptions
- * of both methods for more information). Methods that are defined with
- * parameters would generate an exception and for methods that return a value,
- * no mechanism is provided to relay the returned value back to the user so it
- * would be lost (this excludes methods that begin with the definition
- * {@code displayMenuOnceAndReturn...}. This class uses the reflection API. For
- * more information about the reflection API, see
- * https://docs.oracle.com/javase/tutorial/reflect/index.html
+ * The MenuBuilder class provides a convenient way to create command-line 
+ * interface using menu options which execute specified methods when selected
+ * by the end user. The idea behind this class is that a programmer can create 
+ * no-parameter, no-return methods which perform operations relating to a menu 
+ * option. These no-parameter, no-return methods can be used to create a 
+ * MenuItem which this class can used to build the command-line interface and 
+ * also manage the interaction between a user and the system. It is important 
+ * to note that only public methods that require no arguments and return no 
+ * values (void) are supported. The only exception to this is that the two 
+ * methods that begin with {@code displayMenuOnceAndReturn...} can return a 
+ * value (see the descriptions of both methods for more information). Methods 
+ * that are defined with parameters would generate an exception and for methods 
+ * that return a value, no mechanism is provided to relay the returned value 
+ * back to the programmer so it would be lost (this excludes methods that begin 
+ * with the definition {@code displayMenuOnceAndReturn...}. 
+ * Where an invoked method throws an exception that is not handled by the method, 
+ * the user will be able to see the exception class name and simple message. The 
+ * user will also be able to print the stack trace of the exception on the next 
+ * menu. This class uses the reflection API. For more information about the 
+ * reflection API, see https://docs.oracle.com/javase/tutorial/reflect/index.html
  *
- * @author Chi Onyekaba [c.onyekaba@dundee.ac.uk]
- * @version 1.5
+ * @author Chi Onyekaba
+ * @version 1.6
  * @since January 4, 2018
  *
  */
@@ -34,6 +37,9 @@ public class MenuBuilder {
 
     // The default prompt. Use setDefaultPrompt to change
     private static String defaultPrompt = "Please select a menu option...";
+    
+    // The most recently thrown exception
+    private static Throwable error;
 
     /**
      * This method sets the default prompt message which is displayed on the
@@ -58,8 +64,8 @@ public class MenuBuilder {
     }
 
     /**
-     * Displays a user interface for menu items, sets up a Reader to obtain the
-     * selected option and launches the required method. This method only
+     * Displays a user interface for menu options, sets up a Reader to obtain 
+     * the selected option and launches the required method. This method only
      * supports public methods that do not require arguments and do not return
      * values.
      *
@@ -70,7 +76,7 @@ public class MenuBuilder {
     }
 
     /**
-     * Displays a user interface for menu items, sets up a Reader to obtain the
+     * Displays a user interface for menu options, sets up a Reader to obtain the
      * selected option, launches the required method and runs method finalise()
      * on the Finalisable object when the user exits the application. This
      * method only supports public methods that do not require arguments and do
@@ -92,7 +98,7 @@ public class MenuBuilder {
     }
 
     /**
-     * Displays a user interface for menu items only once, sets up a Reader to
+     * Displays a user interface for menu options only once, sets up a Reader to
      * obtain the selected option and launches the required method. This method
      * only supports public methods that do not require arguments and do not
      * return values. This method returns to the caller once the user has
@@ -106,7 +112,7 @@ public class MenuBuilder {
     }
 
     /**
-     * Displays a user interface for menu items only once, sets up a Reader to
+     * Displays a user interface for menu options only once, sets up a Reader to
      * obtain the selected option and launches the required method. A one-time
      * prompt message can be specified using this method. This message will be
      * displayed to the user before the menu options are listed out on screen.
@@ -124,7 +130,7 @@ public class MenuBuilder {
     }
 
     /**
-     * Displays a user interface for menu items only once, sets up a Reader to
+     * Displays a user interface for menu options only once, sets up a Reader to
      * obtain the selected option and launches the required method. This method
      * only supports public methods that do not require arguments. This method
      * returns the object that was returned from the underlying invoked method,
@@ -136,13 +142,15 @@ public class MenuBuilder {
      * @param <T> The invoked method's expected return type.
      * @param items A comma-separated list of {@code MenuItem} objects.
      * @return Returns the object which was returned by the invoked method or
-     * null if the the invoked object has a return type of void.
+     * null if the the invoked object either has a return type of void or threw 
+     * an exception during execution.
      * @throws ClassCastException if the method invoked by this menu returns a
      * type that cannot be cast to the type specified by this method's type
      * argument, T. Please note that if this method is called from one of the
      * other {@code MenuBuilder} methods, any thrown exception may be caught by
-     * that method and the programmer may not be able to get hold of the
-     * exception.
+     * that {@code MenuBuilder} method and the programmer may not be able to get 
+     * hold of the exception object. It is recommended that exception handling 
+     * be employed within the invoked method when using this display-once method.
      */
     public static <T> T displayMenuOnceAndReturn(MenuItem... items)
             throws ClassCastException {
@@ -165,13 +173,15 @@ public class MenuBuilder {
      * options are listed out.
      * @param items A comma-separated list of {@code MenuItem} objects.
      * @return Returns the object which was returned by the invoked method or
-     * null if the the invoked object has a return type of void.
+     * null if the the invoked object either has a return type of void or threw 
+     * an exception during execution.
      * @throws ClassCastException if the method invoked by this menu returns a
      * type that cannot be cast to the type specified by this method's type
      * argument, T. Please note that if this method is called from one of the
      * other {@code MenuBuilder} methods, any thrown exception may be caught by
-     * that method and the programmer may not be able to get hold of the
-     * exception.
+     * that {@code MenuBuilder} method and the programmer may not be able to get 
+     * hold of the exception object. It is recommended that exception handling 
+     * be employed within the invoked method when using this display-once method.
      */
     public static <T> T displayMenuOnceAndReturn(String prompt, MenuItem... items)
             throws ClassCastException {
@@ -183,14 +193,17 @@ public class MenuBuilder {
     private static void displayMenu(boolean continuous, String prompt, MenuItem... items) {
         do {
             if (prompt == null || prompt.isEmpty()) {
-                System.out.println("\n" + defaultPrompt + "\n");
+                System.out.println("\n" + defaultPrompt);
             } else {
-                System.out.println("\n" + prompt + "\n");
+                System.out.println("\n" + prompt);
             }
             for (MenuItem item : items) {
                 if (item != null) {
                     System.out.println(item.code + ":\t" + item.description);
                 }
+            }
+            if (error != null) {
+                System.out.println("ERR:\tView Error StackTrace");
             }
             System.out.println("\nR:\tReturn");
             System.out.println("X:\tExit");
@@ -199,7 +212,7 @@ public class MenuBuilder {
             do {
                 String option = Reader.readLine("\nEnter your selection").toUpperCase();
                 if (option.equals("R")) {
-                    System.out.println("");
+                    System.out.println();
                     return;
                 } else if (option.equals("X")) {
                     if (finalisable != null) {
@@ -209,10 +222,18 @@ public class MenuBuilder {
                     System.exit(0);
                 }
                 item = search(option, items);
+                if (option.equals("ERR") && error != null) {
+                    // A later version will write this to a log file instead
+                    System.out.println("\n*****Error StackTrace*****");
+                    error.printStackTrace();
+                    item = null; // ...to cause the program to go back to the loop
+                    System.out.println();
+                }
             } while (item == null);
 
             try {
                 System.out.println("\n*****" + item.description + "*****");
+                error = null;
                 rtn = item.object.getClass()
                         .getDeclaredMethod(item.methodName).invoke(item.object);
             } catch (NoSuchMethodException ex) {
@@ -222,13 +243,16 @@ public class MenuBuilder {
             } catch (IllegalArgumentException ex) {
                 System.err.println("Error: Check method arguments and/or class instance!");
             } catch (InvocationTargetException ex) {
-                System.err.println(ex.getCause().getClass().getSimpleName()
-                        + " exception thrown by invoked method!"
-                        + "\nError Message: " + ex.getCause().getMessage());
+                System.err.println("An error has occured!");
+                error = ex.getCause();
+                if (error != null) {
+                    System.err.print(error.getClass().getSimpleName() + ": ");
+                    System.err.println(error.getMessage());
+                }
             }
             if (continuous) {
                 Reader.readLine("\n" + item.description
-                        + " completed!\nPress ENTER to continue");
+                        + " completed!\nPress ENTER to continue...");
             }
         } while (continuous);
     }
@@ -240,8 +264,8 @@ public class MenuBuilder {
                 return item;
             }
         }
-        System.err.println("\nNo such menu!");
+        System.err.println("No such menu!");
         return null; // This null value is only used internally
     }
-
+   
 }
