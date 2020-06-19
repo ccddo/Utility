@@ -1,6 +1,13 @@
 package uod.gla.menu;
 
+import java.io.PrintWriter;
 import java.lang.reflect.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import uod.gla.util.Reader;
 
 /**
@@ -223,10 +230,9 @@ public class MenuBuilder {
                 }
                 item = search(option, items);
                 if (option.equals("ERR") && error != null) {
-                    // A later version will write this to a log file instead
                     System.out.println("\n*****Error StackTrace*****");
                     error.printStackTrace();
-                    item = null; // ...to cause the program to go back to the loop
+                    item = null; // ...to send the program back to the loop
                     System.out.println();
                 }
             } while (item == null);
@@ -248,6 +254,26 @@ public class MenuBuilder {
                 if (error != null) {
                     System.err.print(error.getClass().getSimpleName() + ": ");
                     System.err.println(error.getMessage());
+                }
+                try {
+                    Path path = Paths.get("DataFiles", "log", "log.txt");
+                    Files.createDirectories(path.getParent());
+                    Files.setAttribute(path, "dos:readonly", false);
+                    PrintWriter logFile = new PrintWriter(Files.newBufferedWriter(path, 
+                            StandardOpenOption.CREATE, 
+                            StandardOpenOption.WRITE, 
+                            StandardOpenOption.APPEND));
+                    logFile.println(LocalDateTime.now().format(
+                            DateTimeFormatter.ofPattern("EEE, MMMM d, uuuu. HH:mm:ss")));
+                    ex.printStackTrace(logFile);
+                    logFile.println();
+                    logFile.println("**********************");
+                    logFile.println();
+                    logFile.flush();
+                    logFile.close();
+                    Files.setAttribute(path, "dos:readonly", true);
+                } catch (Exception e) {
+                    // Do nothing!
                 }
             }
             if (continuous) {
