@@ -1,5 +1,6 @@
 package uod.gla.util;
 
+import java.math.*;
 import java.util.*;
 
 /**
@@ -155,10 +156,7 @@ public class Reader {
     /**
      * This method is used to read an integer from the keyboard. The integer
      * entered by the user must be within the range of {@code between} and
-     * {@code and} arguments (inclusive). The order, however, is not necessary.
-     * This means that if {@code between} is greater than {@code and}, the
-     * system will figure this out and still check that the data entered by the
-     * user is within the intended range.
+     * {@code and} arguments (inclusive). The order is not necessary.
      *
      * @param prompt The message to display to the user. In order words, it is
      * the information the program is requesting the user to enter.
@@ -198,6 +196,73 @@ public class Reader {
         throw new IllegalArgumentException("Invalid integer format!");
     }
 
+    /**
+     * This method is used to read a BigInteger value from the keyboard.
+     *
+     * @param prompt The message to display to the user. In order words, it is
+     * the information the program is requesting the user to enter.
+     * @return The integer entered by the user as a BigInteger object.
+     * @throws IllegalArgumentException if the user does not enter a valid
+     * BigInteger within the specified number of attempts.
+     */
+    public static BigInteger readBigInt(String prompt)
+            throws IllegalArgumentException {
+        int temp = attempts;
+        while (temp-- > 0) {
+            try {
+                return new BigInteger(readLine(prompt).trim());
+            } catch (NumberFormatException e) {
+                System.err.println("That's not an integer."
+                        + (temp > 0 ? " Please try again!" : ""));
+            }
+        }
+        throw new IllegalArgumentException("Invalid integer format!");
+    }
+
+    /**
+     * This method is used to read a BigInteger value from the keyboard. The integer
+     * entered by the user must be within the range of {@code between} and
+     * {@code and} arguments (inclusive). The order is not necessary.
+     *
+     * @param prompt The message to display to the user. In order words, it is
+     * the information the program is requesting the user to enter.
+     * @param between The lower limit (or one end) of the BigInteger requested.
+     * @param and The upper limit (or the other end) of the BigInteger requested.
+     * @return The integer entered by the user as a BigInteger object.
+     * @throws IllegalArgumentException if the user does not enter a valid
+     * BigInteger within the specified number of attempts.
+     * @throws NullPointerException if either {@code between} or {@code and} is null
+     */
+    public static BigInteger readBigInt(String prompt, 
+            BigInteger between, BigInteger and) 
+            throws IllegalArgumentException, NullPointerException {
+        BigInteger swap;
+        if (between.compareTo(and) > 0) {
+            swap = between;
+            between = and;
+            and = swap;
+        }
+        int temp = attempts;
+        while (temp-- > 0) {
+            try {
+                BigInteger bigInt = new BigInteger(readLine(prompt).trim());
+                if (between.compareTo(bigInt) > 0 || bigInt.compareTo(and) > 0) {
+                    throw new IllegalArgumentException();
+                } else {
+                    return bigInt;
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("That's not an integer."
+                        + (temp > 0 ? " Please try again!" : ""));
+            } catch (IllegalArgumentException e) {
+                System.err.println("Integer out of range."
+                        + (temp > 0 ? (" Please enter an integer between "
+                                + between + " and " + and + ".") : ""));
+            }
+        }
+        throw new IllegalArgumentException("Invalid integer format!");
+    }
+    
     /**
      * This method is used to read a double value from the keyboard.
      *
@@ -253,6 +318,74 @@ public class Reader {
             }
         }
         throw new IllegalArgumentException("Invalid number format!");
+    }
+    
+    /**
+     * This method is used to read a BigDecimal value from the keyboard.
+     *
+     * @param prompt The message to display to the user. In order words, it is
+     * the information the program is requesting the user to enter.
+     * @return The value entered by the user as a BigDecimal object.
+     * @throws IllegalArgumentException if the user does not enter a valid
+     * decimal value within the number of attempts.
+     */
+    public static BigDecimal readBigDecimal(String prompt)
+            throws IllegalArgumentException {
+        int temp = attempts;
+        while (temp-- > 0) {
+            try {
+                return new BigDecimal(readLine(prompt).trim());
+            } catch (NumberFormatException e) {
+                System.err.println("That's not a number."
+                        + (temp > 0 ? " Please try again!" : ""));
+            }
+        }
+        throw new IllegalArgumentException("Invalid integer format!");
+    }
+    
+    /**
+     * This method is used to read a BigDecimal value from the keyboard. The 
+     * value entered by the user must be within the range of {@code between} and
+     * {@code and} arguments. The order of {@code between} and {@code and} is
+     * not necessary.
+     *
+     * @param prompt The message to display to the user. In order words, it is
+     * the information the program is requesting the user to enter.
+     * @param between The lower limit (or one end) of the BigDecimal requested.
+     * @param and The upper limit (or the other end) of the BigDecimal requested.
+     * @return The value entered by the user as a BigDecimal object.
+     * @throws IllegalArgumentException if the user does not enter a valid
+     * decimal value within the specified number of attempts.
+     */
+    public static BigDecimal readBigDecimal(String prompt, 
+            BigDecimal between, BigDecimal and)
+            throws IllegalArgumentException, NullPointerException {
+        BigDecimal swap;
+        if (between.compareTo(and) > 0) {
+            swap = between;
+            between = and;
+            and = swap;
+        }
+        int temp = attempts;
+        while (temp-- > 0) {
+            try {
+                BigDecimal bigDec = new BigDecimal(readLine(prompt).trim());
+                if (between.compareTo(bigDec) > 0 || bigDec.compareTo(and) > 0) {
+                    throw new IllegalArgumentException();
+                } else {
+                    return bigDec;
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("That's not a number."
+                        + (temp > 0 ? " Please try again!" : ""));
+            } catch (IllegalArgumentException e) {
+                System.err.println("Number out of range."
+                        + (temp > 0 ? (" Please enter a number between "
+                                + between.toPlainString() + " and " 
+                                + and.toPlainString() + ".") : ""));
+            }
+        }
+        throw new IllegalArgumentException("Invalid decimal number format!");
     }
 
     /**
