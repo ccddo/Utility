@@ -112,7 +112,8 @@ public class Sequence implements Serializable {
     /**
      * Returns the value that was returned by the last call to {@code next()}.
      *
-     * @return @throws IllegalStateException if there has not been any call to
+     * @return the value that was returned by the last call to {@code next()}.
+     * @throws IllegalStateException if there has not been any call to
      * {@code next()} for this sequence.
      */
     public String current() throws IllegalStateException {
@@ -126,7 +127,9 @@ public class Sequence implements Serializable {
      * Returns the value that will be returned by the next call to
      * {@code next()}.
      *
-     * @return @throws IndexOutOfBoundsException if the is no value to return,
+     * @return the value that will be returned by the next call to
+     * {@code next()}.
+     * @throws IndexOutOfBoundsException if the is no value to return,
      * that is, if the last value has been returned.
      */
     public String peek() throws IndexOutOfBoundsException {
@@ -142,7 +145,8 @@ public class Sequence implements Serializable {
     /**
      * Returns the next value in this sequence.
      *
-     * @return @throws IndexOutOfBoundsException if the is no value to return,
+     * @return the next value in this sequence.
+     * @throws IndexOutOfBoundsException if the is no value to return,
      * that is, if the last value has been returned.
      */
     public String next() throws IndexOutOfBoundsException {
