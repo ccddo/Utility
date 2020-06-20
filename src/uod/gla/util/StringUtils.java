@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * This class provides utility methods for strings.
  *
- * @author Chi Onyekaba [c.onyekaba@dundee.ac.uk]
+ * @author Chi Onyekaba
  * @version 1.2
  * @since April 4, 2018
  */
@@ -17,7 +17,8 @@ public class StringUtils {
      * its first character in upper case.
      *
      * @param word The string to capitalise.
-     * @return The string with its first character in upper case.
+     * @return The string with its first character in upper case and the rest in 
+     * lower case.
      */
     public static String toTitleCase(String word) {
         if (word == null || word.length() == 0) {
@@ -26,7 +27,7 @@ public class StringUtils {
             return word.toUpperCase();
         }
         return word.substring(0, 1).toUpperCase()
-                + word.substring(1);
+                + word.substring(1).toLowerCase();
     }
 
     /**
