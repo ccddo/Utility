@@ -2,10 +2,7 @@ package uod.gla.menu;
 
 import java.io.PrintWriter;
 import java.lang.reflect.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
+import java.nio.file.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import uod.gla.util.Reader;
@@ -29,7 +26,8 @@ import uod.gla.util.Reader;
  * Where an invoked method throws an exception that is not handled by the method, 
  * the user will be able to see the exception class name and simple message. The 
  * user will also be able to print the stack trace of the exception on the next 
- * menu. This class uses the reflection API. For more information about the 
+ * menu and the stack trace of the error is saved to a log file on the disk. 
+ * This class uses the reflection API. For more information about the 
  * reflection API, see https://docs.oracle.com/javase/tutorial/reflect/index.html
  *
  * @author Chi Onyekaba
@@ -155,8 +153,8 @@ public class MenuBuilder {
      * type that cannot be cast to the type specified by this method's type
      * argument, T. Please note that if this method is called from one of the
      * other {@code MenuBuilder} methods, any thrown exception may be caught by
-     * that {@code MenuBuilder} method and the programmer may not be able to get 
-     * hold of the exception object. It is recommended that exception handling 
+     * that {@code MenuBuilder} method and the programmer may not be able to  
+     * obtain the exception object. It is recommended that exception handling 
      * be employed within the invoked method when using this display-once method.
      */
     public static <T> T displayMenuOnceAndReturn(MenuItem... items)
@@ -186,8 +184,8 @@ public class MenuBuilder {
      * type that cannot be cast to the type specified by this method's type
      * argument, T. Please note that if this method is called from one of the
      * other {@code MenuBuilder} methods, any thrown exception may be caught by
-     * that {@code MenuBuilder} method and the programmer may not be able to get 
-     * hold of the exception object. It is recommended that exception handling 
+     * that {@code MenuBuilder} method and the programmer may not be able to  
+     * obtain the exception object. It is recommended that exception handling 
      * be employed within the invoked method when using this display-once method.
      */
     public static <T> T displayMenuOnceAndReturn(String prompt, MenuItem... items)
