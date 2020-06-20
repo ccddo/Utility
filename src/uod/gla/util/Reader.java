@@ -697,7 +697,7 @@ public class Reader {
             int count = 0;
             for (T object : list) {
                 System.out.println(++count + ":\t"
-                        + object.toString().replace("\n", "\n\t") + "\n");
+                        + object.toString().replace("\n", "\n\t")); // ) + "\n");
             }
             int objectIndex = readInt("Enter the option number", 1, list.size());
             selection = list.get(objectIndex - 1);
@@ -738,9 +738,7 @@ public class Reader {
             selection.add(selected);
             items.remove(selected);
             System.out.println("\nCurrently selected items: ");
-            for (T t : selection) {
-                System.out.println(t);
-            }
+            selection.forEach(System.out::println);
             System.out.println();
         } while (!items.isEmpty()
                 && readBoolean("Do you want to select another item"));
