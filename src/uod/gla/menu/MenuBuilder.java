@@ -196,6 +196,7 @@ public class MenuBuilder {
 
     // Manages the displaying of menu options
     private static void displayMenu(boolean continuous, String prompt, MenuItem... items) {
+        outer:
         do {
             if (prompt == null || prompt.isEmpty()) {
                 System.out.println("\n" + defaultPrompt);
@@ -226,13 +227,14 @@ public class MenuBuilder {
                     System.out.println("\nGoodbye!\n");
                     System.exit(0);
                 }
-                item = search(option, items);
-                if (option.equals("ERR") && error != null) {
+                if (error != null && option.equals("ERR")) {
                     System.out.println("\n*****Error StackTrace*****");
-                    error.printStackTrace();
-                    item = null; // ...to send the program back to the loop
+                    error.printStackTrace(System.out);
+                    error = null;
                     System.out.println();
+                    continue outer;
                 }
+                item = search(option, items);
             } while (item == null);
 
             try {
@@ -256,20 +258,23 @@ public class MenuBuilder {
                 try {
                     Path path = Paths.get("DataFiles", "log", "log.txt");
                     Files.createDirectories(path.getParent());
-                    Files.setAttribute(path, "dos:readonly", false);
+                    // if (Files.exists(path)) {
+                    //     Files.setAttribute(path, "dos:readonly", false);
+                    // } Support for altering posix permissions will be added later
                     PrintWriter logFile = new PrintWriter(Files.newBufferedWriter(path, 
                             StandardOpenOption.CREATE, 
                             StandardOpenOption.WRITE, 
                             StandardOpenOption.APPEND));
                     logFile.println(LocalDateTime.now().format(
                             DateTimeFormatter.ofPattern("EEE, MMMM d, uuuu. HH:mm:ss")));
-                    ex.printStackTrace(logFile);
+                    error.printStackTrace(logFile);
                     logFile.println();
                     logFile.println("**********************");
                     logFile.println();
                     logFile.flush();
                     logFile.close();
-                    Files.setAttribute(path, "dos:readonly", true);
+                    // Support for altering posix permissions will be added later
+                    // Files.setAttribute(path, "dos:readonly", true);
                 } catch (Exception e) {
                     // Do nothing!
                 }
