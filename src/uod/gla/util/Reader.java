@@ -72,7 +72,11 @@ public class Reader {
             prompt = prompt + " ";
         }
         System.out.print(prompt);
-        return INPUT.nextLine().trim();
+        String input = INPUT.nextLine().trim();
+        if (input.equalsIgnoreCase("\\\\R")) {
+            throw new RuntimeException();
+        }
+        return input;
     }
 
     /**
