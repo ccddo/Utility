@@ -248,6 +248,8 @@ public class MenuBuilder {
                 System.err.println("Method is inaccessible!");
             } catch (IllegalArgumentException ex) {
                 System.err.println("Error: Check method arguments and/or class instance!");
+            } catch (RuntimeException ex) {
+                //System.err.println("Method aborted!");
             } catch (InvocationTargetException ex) {
                 System.err.println("An error has occured!");
                 error = ex.getCause();
@@ -280,8 +282,8 @@ public class MenuBuilder {
                 }
             }
             if (continuous) {
-                Reader.readLine("\n" + item.description
-                        + " completed!\nPress ENTER to continue...");
+                Reader.readLine("\nEnd of " + item.description
+                        + " procedure!\nPress ENTER to return to menu options...");
             }
         } while (continuous);
     }
