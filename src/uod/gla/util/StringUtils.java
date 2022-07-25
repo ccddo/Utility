@@ -14,10 +14,10 @@ public class StringUtils {
 
     /**
      * This method takes in a string and returns it in title case, that is, with
-     * its first character in upper case.
+     * its first character in upper case and the rest in lower case.
      *
-     * @param word The string to capitalise.
-     * @return The string with its first character in upper case and the rest in 
+     * @param word The string to convert to title case.
+     * @return The string with its first character in upper case and the rest in
      * lower case.
      */
     public static String toTitleCase(String word) {
@@ -129,19 +129,21 @@ public class StringUtils {
         }
         System.out.println();
     }
-    
+
     /**
-     * This method takes in a string and return a fixed-length string, either 
-     * appending the original string with spaces (if it is less than the required 
-     * length) or dropping any excess characters (and possibly appending an ellipsis).
-     * This method is useful in situations where a string needs to be fitted into 
-     * a fixed sized space or cell.
+     * This method takes in a string and return a fixed-length string, either
+     * appending the original string with spaces (if it is less than the
+     * required length) or dropping any excess characters (and possibly
+     * appending an ellipsis). This method is useful in situations where a
+     * string needs to be fitted into a fixed sized space or cell.
+     *
      * @param str the string to convert to a fixed-length string
      * @param length the required string length
      * @return A fixed-length string
-     * @throws IllegalArgumentException if the specified length is less than zero.
+     * @throws IllegalArgumentException if the specified length is less than
+     * zero.
      */
-    public static String toFixedLength(String str, int length) 
+    public static String toFixedLength(String str, int length)
             throws IllegalArgumentException {
         if (length < 0) {
             throw new IllegalArgumentException("String length must be greater than zero!");
