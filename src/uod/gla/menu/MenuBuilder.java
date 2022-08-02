@@ -5,30 +5,31 @@ import java.lang.reflect.*;
 import java.nio.file.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import uod.gla.util.MenuExitException;
 import uod.gla.util.Reader;
 
 /**
- * The MenuBuilder class provides a convenient way to create command-line 
- * interface using menu options which execute specified methods when selected
- * by the end user. The idea behind this class is that a programmer can create 
- * no-parameter, no-return methods which perform operations relating to a menu 
- * option. These no-parameter, no-return methods can be used to create a 
- * MenuItem which this class can used to build the command-line interface and 
- * also manage the interaction between a user and the system. It is important 
- * to note that only public methods that require no arguments and return no 
- * values (void) are supported. The only exception to this is that the two 
- * methods that begin with {@code displayMenuOnceAndReturn...} can return a 
- * value (see the descriptions of both methods for more information). Methods 
- * that are defined with parameters would generate an exception and for methods 
- * that return a value, no mechanism is provided to relay the returned value 
- * back to the programmer so it would be lost (this excludes methods that begin 
- * with the definition {@code displayMenuOnceAndReturn...}. 
- * Where an invoked method throws an exception that is not handled by the method, 
- * the user will be able to see the exception class name and simple message. The 
- * user will also be able to print the stack trace of the exception on the next 
- * menu and the stack trace of the error is saved to a log file on the disk. 
- * This class uses the reflection API. For more information about the 
- * reflection API, see https://docs.oracle.com/javase/tutorial/reflect/index.html
+ * The MenuBuilder class provides a convenient way to create command-line
+ * interface using menu options which execute specified methods when selected by
+ * the end user. The idea behind this class is that a programmer can create
+ * no-parameter, no-return methods which perform operations relating to a menu
+ * option. These no-parameter, no-return methods can be used to create a
+ * MenuItem which this class can used to build the command-line interface and
+ * also manage the interaction between a user and the system. It is important to
+ * note that only public methods that require no arguments and return no values
+ * (void) are supported. The only exception to this is that the two methods that
+ * begin with {@code displayMenuOnceAndReturn...} can return a value (see the
+ * descriptions of both methods for more information). Methods that are defined
+ * with parameters would generate an exception and for methods that return a
+ * value, no mechanism is provided to relay the returned value back to the
+ * programmer so it would be lost (this excludes methods that begin with the
+ * definition {@code displayMenuOnceAndReturn...}. Where an invoked method
+ * throws an exception that is not handled by the method, the user will be able
+ * to see the exception class name and simple message. The user will also be
+ * able to print the stack trace of the exception on the next menu and the stack
+ * trace of the error is saved to a log file on the disk. This class uses the
+ * reflection API. For more information about the reflection API, see
+ * https://docs.oracle.com/javase/tutorial/reflect/index.html
  *
  * @author Chi Onyekaba
  * @version 1.6
@@ -42,7 +43,7 @@ public class MenuBuilder {
 
     // The default prompt. Use setDefaultPrompt to change
     private static String defaultPrompt = "Please select a menu option...";
-    
+
     // The most recently thrown exception
     private static Throwable error;
 
@@ -69,7 +70,7 @@ public class MenuBuilder {
     }
 
     /**
-     * Displays a user interface for menu options, sets up a Reader to obtain 
+     * Displays a user interface for menu options, sets up a Reader to obtain
      * the selected option and launches the required method. This method only
      * supports public methods that do not require arguments and do not return
      * values.
@@ -81,16 +82,17 @@ public class MenuBuilder {
     }
 
     /**
-     * Displays a user interface for menu options, sets up a Reader to obtain the
-     * selected option, launches the required method and runs method finalise()
-     * on the Finalisable object when the user exits the application. This
-     * method only supports public methods that do not require arguments and do
-     * not return values. On system exit (using the X command), this method
-     * automatically executes the finalise method of the Finalisable object
-     * which was passed in as an argument. Please note that if you exit the
-     * application by returning (R), the finalise() method will not be executed.
-     * To ensure that finalise() executes in all cases, add a call to the
-     * finalise() method, as the last line in the main method of your program.
+     * Displays a user interface for menu options, sets up a Reader to obtain
+     * the selected option, launches the required method and runs method
+     * finalise() on the Finalisable object when the user exits the application.
+     * This method only supports public methods that do not require arguments
+     * and do not return values. On system exit (using the X command), this
+     * method automatically executes the finalise method of the Finalisable
+     * object which was passed in as an argument. Please note that if you exit
+     * the application by returning (R), the finalise() method will not be
+     * executed. To ensure that finalise() executes in all cases, add a call to
+     * the finalise() method, as the last line in the main method of your
+     * program.
      *
      * @param object A class that implements the Finalisable interface. This
      * interface may be used to perform any final (or clean-up) tasks before the
@@ -147,15 +149,15 @@ public class MenuBuilder {
      * @param <T> The invoked method's expected return type.
      * @param items A comma-separated list of {@code MenuItem} objects.
      * @return Returns the object which was returned by the invoked method or
-     * null if the the invoked object either has a return type of void or threw 
+     * null if the the invoked object either has a return type of void or threw
      * an exception during execution.
      * @throws ClassCastException if the method invoked by this menu returns a
      * type that cannot be cast to the type specified by this method's type
      * argument, T. Please note that if this method is called from one of the
      * other {@code MenuBuilder} methods, any thrown exception may be caught by
-     * that {@code MenuBuilder} method and the programmer may not be able to  
-     * obtain the exception object. It is recommended that exception handling 
-     * be employed within the invoked method when using this display-once method.
+     * that {@code MenuBuilder} method and the programmer may not be able to
+     * obtain the exception object. It is recommended that exception handling be
+     * employed within the invoked method when using this display-once method.
      */
     public static <T> T displayMenuOnceAndReturn(MenuItem... items)
             throws ClassCastException {
@@ -178,15 +180,15 @@ public class MenuBuilder {
      * options are listed out.
      * @param items A comma-separated list of {@code MenuItem} objects.
      * @return Returns the object which was returned by the invoked method or
-     * null if the the invoked object either has a return type of void or threw 
+     * null if the the invoked object either has a return type of void or threw
      * an exception during execution.
      * @throws ClassCastException if the method invoked by this menu returns a
      * type that cannot be cast to the type specified by this method's type
      * argument, T. Please note that if this method is called from one of the
      * other {@code MenuBuilder} methods, any thrown exception may be caught by
-     * that {@code MenuBuilder} method and the programmer may not be able to  
-     * obtain the exception object. It is recommended that exception handling 
-     * be employed within the invoked method when using this display-once method.
+     * that {@code MenuBuilder} method and the programmer may not be able to
+     * obtain the exception object. It is recommended that exception handling be
+     * employed within the invoked method when using this display-once method.
      */
     public static <T> T displayMenuOnceAndReturn(String prompt, MenuItem... items)
             throws ClassCastException {
@@ -251,34 +253,39 @@ public class MenuBuilder {
             } catch (RuntimeException ex) {
                 //System.err.println("Method aborted!");
             } catch (InvocationTargetException ex) {
-                System.err.println("An error has occured!");
-                error = ex.getCause();
-                if (error != null) {
-                    System.err.print(error.getClass().getSimpleName() + ": ");
-                    System.err.println(error.getMessage());
-                }
-                try {
-                    Path path = Paths.get("DataFiles", "log", "log.txt");
-                    Files.createDirectories(path.getParent());
-                    // if (Files.exists(path)) {
-                    //     Files.setAttribute(path, "dos:readonly", false);
-                    // } Support for altering posix permissions will be added later
-                    PrintWriter logFile = new PrintWriter(Files.newBufferedWriter(path, 
-                            StandardOpenOption.CREATE, 
-                            StandardOpenOption.WRITE, 
-                            StandardOpenOption.APPEND));
-                    logFile.println(LocalDateTime.now().format(
-                            DateTimeFormatter.ofPattern("EEE, MMMM d, uuuu. HH:mm:ss")));
-                    error.printStackTrace(logFile);
-                    logFile.println();
-                    logFile.println("**********************");
-                    logFile.println();
-                    logFile.flush();
-                    logFile.close();
-                    // Support for altering posix permissions will be added later
-                    // Files.setAttribute(path, "dos:readonly", true);
-                } catch (Exception e) {
-                    // Do nothing!
+                if (ex.getCause() instanceof MenuExitException) {
+                    System.out.println("Menu option ***"
+                            + item.description + "*** has been terminated");
+                } else {
+                    System.err.println("An error has occured!");
+                    error = ex.getCause();
+                    if (error != null) {
+                        System.err.print(error.getClass().getSimpleName() + ": ");
+                        System.err.println(error.getMessage());
+                    }
+                    try {
+                        Path path = Paths.get("DataFiles", "log", "log.txt");
+                        Files.createDirectories(path.getParent());
+                        // if (Files.exists(path)) {
+                        //     Files.setAttribute(path, "dos:readonly", false);
+                        // } Support for altering posix permissions will be added later
+                        PrintWriter logFile = new PrintWriter(Files.newBufferedWriter(path,
+                                StandardOpenOption.CREATE,
+                                StandardOpenOption.WRITE,
+                                StandardOpenOption.APPEND));
+                        logFile.println(LocalDateTime.now().format(
+                                DateTimeFormatter.ofPattern("EEE, MMMM d, uuuu. HH:mm:ss")));
+                        error.printStackTrace(logFile);
+                        logFile.println();
+                        logFile.println("**********************");
+                        logFile.println();
+                        logFile.flush();
+                        logFile.close();
+                        // Support for altering posix permissions will be added later
+                        // Files.setAttribute(path, "dos:readonly", true);
+                    } catch (Exception e) {
+                        // Do nothing!
+                    }
                 }
             }
             if (continuous) {
@@ -298,5 +305,5 @@ public class MenuBuilder {
         System.err.println("No such menu!");
         return null; // This null value is only used internally
     }
-   
+
 }
